@@ -1,1 +1,1 @@
-# We are team 7 of Section 3 of CS 131 Fall 2025.
+# We are Team 7 of CS131, Section 03, Fall 2025.
