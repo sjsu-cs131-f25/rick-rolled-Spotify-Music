@@ -1,1 +1,4 @@
-# We are Team 7 of CS131, Section 03, Fall 2025.
+# Spotify Tracks Dataset Analysis
+A dataset of Spotify songs with different genres and their audio features. <br/>
+### Rick-Rolled (Team 7)
+Aaron Pang, Ethan Tran, Chloe Pham, Samuel Leonetti, Dan Nguyen
