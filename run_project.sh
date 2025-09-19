@@ -7,3 +7,5 @@ tail -n +2 dataset_clean.csv | cut -d ',' -f9 | sort | uniq -c | sort -nr > out/
 tail -n +2 dataset_clean.csv | cut -d ',' -f10 | sort | uniq -c | sort -nr > out/freq_energy.txt 2> out/errors.txt
 
 tail -n +2 dataset_clean.csv | cut -d ',' -f21 | sort | uniq -c | sort -nr | head -n 50 | tee -a out/music_top_50_genres.txt
+
+cut -d ',' -f6,10,19 dataset_clean.csv | sort -u > out/popularity_energy_tempo.txt
