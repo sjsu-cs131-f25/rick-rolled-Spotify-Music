@@ -57,7 +57,11 @@ e -a out/music_top_50_genres.txt
     957 power-pop
     956 songwriter
     956 singer-songwriter
+bash-4.4$ cut -d ',' -f6,10,19 dataset_clean.csv | sort -u > out/popularity_energy_tempo.txt
+bash-4.4$ mkdir -p data/samples
+bash-4.4$ (head -n 1 dataset_clean.csv && tail -n +2 dataset_clean.csv | shuf -n 1000) > data/samples/sample_1k.csv
 bash-4.4$ exit
 exit
 
 Script done on 2025-09-16 02:24:30-04:00
+
