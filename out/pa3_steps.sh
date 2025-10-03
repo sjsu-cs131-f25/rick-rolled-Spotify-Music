@@ -4,19 +4,6 @@
 
 set -euo pipefail
 
-# Histogram of cluster sizes, top 30 overall, clusters and diff top 30
-
-cut -f1,2 edges_thresholded.tsv | sort -u | cut -f1 | uniq -c | sort -nr \
-| sed -E 's/^[[:space:]]*([0-9]+)[[:space:]]+(.+)/\2\t\1/' > cluster_sizes.tsv
-
-cut -d',' -f21 dataset_clean.csv | sort | uniq -c | sort -nr | head -30 > top30_overall.txt
-
-cut -f2 edges_thresholded.tsv | grep -F -f - dataset_clean.csv | cut -d',' -f21 | sed 's/.*/\L&/' | sed '/^$/d' | sort | uniq -c | sort -nr | head -30 > top30_clusters.txt
-
-paste top30_overall.txt top30_clusters.txt > diff_top30.txt
-
-
-
 # Build edges from dataset, enity count and thresholded edges
 cut -d',' -f3,2 dataset_clean.csv | tail -n +2 | tr ',' '\t' | \
 
@@ -40,6 +27,17 @@ awk -F'\t' 'NR==FNR{entities[$0]=1; next} $1 in entities' \
 
 rm significant_entities.txt
 
+# Histogram of cluster sizes, top 30 overall, clusters and diff top 30
+
+cut -f1,2 edges_thresholded.tsv | sort -u | cut -f1 | uniq -c | sort -nr \
+| sed -E 's/^[[:space:]]*([0-9]+)[[:space:]]+(.+)/\2\t\1/' > cluster_sizes.tsv
+
+cut -d',' -f21 dataset_clean.csv | sort | uniq -c | sort -nr | head -30 > top30_overall.txt
+
+cut -f2 edges_thresholded.tsv | grep -F -f - dataset_clean.csv | cut -d',' -f21 | sed 's/.*/\L&/' | sed '/^$/d' | sort | u$
+
+paste top30_overall.txt top30_clusters.txt > diff_top30.txt
+
 # Summary statistics(datamash)
 tail -n +2 freq_energy.txt | awk '{print $1 "\t" $2}' > freq_energy.tsv
 tail -n +2 edges_thresholded.tsv > edges_nohdr.tsv
@@ -52,4 +50,4 @@ LC_ALL=C sort -t $'\t' -k1,1 left_outcome.tsv > left_outcome.sorted.tsv
 datamash -t $'\t' -g 1 count 2 mean 2 median 2 \
   < left_outcome.sorted.tsv > cluster_outcomes.tsv
 
-echo "[PA3] Finished. Deliverables in $OUT/"
+echo "[PA3] Finished"
