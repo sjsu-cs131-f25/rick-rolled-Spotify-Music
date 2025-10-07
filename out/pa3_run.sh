@@ -4,6 +4,8 @@
 set -euo pipefail
 
 # Build edges, from dataset, enity count and thresholded edges
+grep -vi '".*,.*"' dataset.csv > dataset_clean.csv
+
 cut -d',' -f3,2 dataset_clean.csv | tail -n +2 | tr ',' '\t' \
 | awk -F'\t' '{print $2 "\t" $1}' \
 | awk -F'\t' '{
