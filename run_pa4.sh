@@ -1,4 +1,4 @@
-#!/user/bin/env bash
+#!/usr/bin/env bash
 
 #idk why but if i put the pipefail then it wont let me go past the before_sample.csv yall
 
@@ -60,3 +60,7 @@ echo "saved top5_keys.txt to out/"
 } > out/pop_speech_instr.txt
 
 echo "saved pop_speech_instr.txt to out/"
+
+mkdir -p logs
+awk -f step34.awk out/dataset_consistent.csv
+
