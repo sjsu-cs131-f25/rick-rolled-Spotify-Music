@@ -61,6 +61,51 @@ echo "saved top5_keys.txt to out/"
 
 echo "saved pop_speech_instr.txt to out/"
 
+# 3,4) Quality Filtering, Buckets, Ratios and Per-Entity Summaries
+echo "Step 3"
+echo "Step 4"
 mkdir -p logs
 awk -f step34.awk out/dataset_consistent.csv
 
+# 5) Temporal or string structure
+echo "Step 5"
+awk -F, '
+NR > 1 {
+	len = length($5);
+	if (len <= 20) bucket = "Short";
+	else if (len <= 50) bucket = "Medium";
+	else bucket = "Long";
+freq[bucket]++;
+}
+END {
+	print "Bucket,Frequency";
+	for (b in freq) print b "," freq[b];
+}' dataset_consistent.csv > out/track_name_length_buckets.txt
+
+echo "saved track_name_length_buckets.txt to out/"
+
+# 6) Signal discovery tailored to feature types
+echo "Step 6"
+awk -F, 'NR>1 {
+    genre = tolower($21);
+    gsub(/"/,"",genre);
+    album = tolower($4);
+    gsub(/"/,"",album);
+    key = genre SUBSEP album;
+    if (!(key in seen)) {
+        seen[key]++;
+        n = split(album, words, /[^a-z0-9]+/);
+        for (i=1; i<=n; i++) {
+            w = words[i];
+            if (length(w)>1 && w !~ /^(the|a|an|and|or|in|of|on|for|with|ao|de)$/) {
+                freq[genre","w]++;
+            }
+        }
+    }
+}
+END {
+    print "genre,word,count";
+    for (k in freq) print k "," freq[k];
+}' dataset_consistent.csv | sort -t, -k3,3nr > out/album_word_by_genre.txt
+
+echo "saved album_word_by_genre.txt to out/"
