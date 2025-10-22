@@ -80,7 +80,7 @@ freq[bucket]++;
 END {
 	print "Bucket,Frequency";
 	for (b in freq) print b "," freq[b];
-}' dataset_consistent.csv > out/track_name_length_buckets.txt
+}' out/dataset_consistent.csv > out/track_name_length_buckets.txt
 
 echo "saved track_name_length_buckets.txt to out/"
 
@@ -106,6 +106,6 @@ awk -F, 'NR>1 {
 END {
     print "genre,word,count";
     for (k in freq) print k "," freq[k];
-}' dataset_consistent.csv | sort -t, -k3,3nr > out/album_word_by_genre.txt
+}' out/dataset_consistent.csv | sort -t, -k3,3nr > out/album_word_by_genre.txt
 
 echo "saved album_word_by_genre.txt to out/"
