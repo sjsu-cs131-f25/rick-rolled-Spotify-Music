@@ -35,5 +35,8 @@ Size:
 Samples:
 - A 1,000-row random sample (plus header) saved at:  
   `data/samples/sample_1k.csv`  
-
+### How to Run final_project.py
+- ensure that dataset.csv exists in the same exact directory as final_project.py
+- run in VM and then run the following command using your bucket name as a Python argument
+- time spark-submit --conf spark.ui.enabled=true --conf spark.ui.port=4040 --master local[*] ~/final_project.py <BUCKET NAME>
 
